@@ -100,7 +100,7 @@ server.get('/', function(req, res, next) {
 
 # Body-parser
 
-- Mw para facilitar a extração do corpo da requisição
+- MW para facilitar a extração do corpo da requisição
 
 - Instalando: `$ npm i -s body-parser`
 
@@ -109,4 +109,14 @@ const bodyParser = require('body-parser')
 
 // parse application/json
 server.use(bodyParser.json()
+```
+
+# CORS
+
+- MW Para autorizar troca de mensagens entre dominios externos
+
+```js
+const cors = require('cors')
+
+server.use(cors())
 ```
