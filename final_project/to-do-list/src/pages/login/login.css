@@ -1,0 +1,11 @@
+.margin{
+    padding: 10px;
+    margin-top: 10%;
+}
+
+.border{
+    border: groove;
+    background-color: rgba(99, 99, 99, 0.534);
+    border-radius: 12px ;
+    width: 50em;
+}
