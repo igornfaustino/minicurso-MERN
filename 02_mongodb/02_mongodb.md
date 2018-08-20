@@ -39,3 +39,54 @@
 # Mongoose
 
 - Ajuda a manipular o MongoDB e seus objetos em projetos de NodeJS
+
+``` js
+const mongoose = require('mongoose');
+
+mongoose.connect('mongodb://localhost:27017/todo');
+const db = mongoose.connection;
+db.on('error', console.error.bind(console, 'connection error:'));
+db.once('open', function() {
+  // we're connected!
+});
+```
+
+# Models
+
+- Modelos dos dados
+
+``` js
+const mongoose = require('mongoose');
+
+const UserSchema = mongoose.Schema({
+    email: String,
+    password: String
+})
+
+module.exports = mongoose.model('User', UserSchema)
+const User = mongoose.model('User', UserSchema)
+
+module.exports.getUserById = function (id, callback) {
+    User.findById(id, callback)
+}
+
+module.exports.getUserByEmail = function (email, callback) {
+    User.find({email: email}, callback)
+}
+
+module.exports.addUser = function (user, callback) {
+    User.create(user, callback)
+}
+
+module.exports.updateUser = function (updateUser, callback) {
+    User.getUserById(updateUser._id, (err, user) => {
+        user.email = (updateUser.email && updateUser.email != user.email) ? updateUser.email: user.email
+        user.password = (updateUser.password && updateUser.password != user.password) ? updateUser.password: user.password
+        user.save(callback)
+    })
+}
+
+module.exports.deleteUser = function (id, callback) {
+    User.deleteOne({_id: id}, callback)
+}
+```

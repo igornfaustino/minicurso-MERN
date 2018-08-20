@@ -120,3 +120,68 @@ const cors = require('cors')
 
 server.use(cors())
 ```
+
+# Nodemon
+
+- Facilitar o desenvolivento
+- Hot Reload
+
+## Instalar
+- `npm i --save-dev nodemon`
+
+## Criar um novo script
+- `dev: node_modules/nodemon/bin/nodemon.js server.js`
+- `npm run dev`
+
+# Separando Rotas em arquivos
+
+- Melhorar a organização do codigo
+
+``` js
+const express = require('express');
+const router = express.Router();
+
+router.get('/', function (req, res) {
+    res.send('user route')
+})
+
+module.exports = router
+```
+
+# Separando Rotas em arquivos
+
+``` js
+const user = require('.route/user')
+
+server.use('/api/user', user)
+```
+
+- "Problema": Ter que importar todas as rotas
+
+# Melhorando o codigo
+
+- Requisitos: `url-join`
+
+``` js
+const fs = require('fs');
+const path = require('path');
+const urljoin = require('url-join');
+
+const basename = path.basename(module.filename);
+
+const loadRoutes = (app, appPath) => {
+    fs.readdirSync(__dirname).filter(file => {
+        return (file.indexOf('.') != 0) && (file != basename) && (file.slice(-3) == '.js')
+    }).forEach(file => {
+        const routeFile = path.join(__dirname, file) // Get the path for each file
+        const route = require(routeFile) // require the router element
+        const routePath = urljoin(appPath, route.path)
+        console.log("loading... route: ", routePath)
+        app.use(routePath, route.router)
+    })
+}
+
+module.exports = {
+    loadRoutes
+}
+```
