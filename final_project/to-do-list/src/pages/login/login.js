@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Col, Button, Form, FormGroup, Label, Input, Container} from 'reactstrap'
+import {Button, Form, Input} from 'reactstrap'
 import Singup from '../../components/modal_singup/singup';
 import "./login.css";
 
@@ -41,42 +41,35 @@ export default class Login extends Component {
 
     render() {
         return (
-            <div align="center">
-                <Container className="border margin">
-                    <Form>
-                        <FormGroup >
-                            <Col sm={3}>
-                                <Input type="email"
-                                    name="email"
-                                    value={this.state.email}
-                                    onChange={(event) => this.handleChange(event)}
-                                    required
-                                    placeholder="Digite seu e-mail" />
-                            </Col>
-                        </FormGroup>
-                        <FormGroup>
-                            <Col sm={3}>
-                                <Input type="password"
-                                    name="password"
-                                    value={this.state.password}
-                                    onChange={(event) => this.handleChange(event)}
-                                    required
-                                    placeholder="Digite sua senha" />
-                            </Col>
-                        </FormGroup>
-                        <FormGroup>
-                            <Col sm={3}>
-                                <Button type="submit" color="primary" disabled={!this.validateForm()} onClick={this.submitRequest}>Entrar!</Button>
-                            </Col>
-                        </FormGroup>
-                        {/* Modal para cadastro */}
-                        <FormGroup>
-                            <Button color="secondary" onClick={this.toggle}>{this.props.buttonLabel}Cadastre-se!</Button>
-                        </FormGroup>
+            <div>
+                <div className="text-center body">
+                    <Form className="form-signin form">
+                        <h1 className="h3 mb-3 font-weight-normal">Login</h1>
+                        <Input 
+                            type="email"
+                            name="email"
+                            value={this.state.email}
+                            onChange={(event) => this.handleChange(event)}
+                            required
+                            placeholder="Digite seu e-mail" 
+                            style={{marginTop: "25%"}} />
 
-                        <Singup modal={this.state.modal} toggle={this.toggle}/>
+
+                        <Input type="password"
+                            name="password"
+                            value={this.state.password}
+                            onChange={(event) => this.handleChange(event)}
+                            required
+                            placeholder="Digite sua senha" />
+
+                        <Button className="btn btn-info btn-color margin-button" type="submit" color="primary" disabled={!this.validateForm()} onClick={this.submitRequest}>Entrar!</Button>
+
+                        <Button color="secondary"  onClick={this.toggle}>{this.props.buttonLabel}Cadastre-se!</Button>
+
+                        <Singup modal={this.state.modal} toggle={this.toggle} />
                     </Form>
-                </Container>
+
+                </div>
             </div>
         );
     }
