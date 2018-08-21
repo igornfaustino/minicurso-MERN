@@ -1,6 +1,7 @@
 const express = require('express');
 const ToDo = require('../models/todo')
 const Joi = require('joi')
+const passport = require('passport')
 const validator = require('express-joi-validation')({})
 
 Joi.objectId = require('joi-objectid')(Joi);
@@ -17,8 +18,8 @@ const paramsValidator = Joi.object({
     id: Joi.objectId().required()
 })
 
-router.get('/todo/:id', validator.params(paramsValidator), function (req, res) {
-    ToDo.getTodoById(req.params.id, function (err, todo) {
+router.get('/todo/:id', passport.authenticate('jwt', { session: false }), validator.params(paramsValidator), function (req, res) {
+    ToDo.getTodoById(req.params.id, req.user._id, function (err, todo) {
         if (err) {
             console.log(err)
             return res.status(400).send('server could not understand the request')
@@ -27,8 +28,8 @@ router.get('/todo/:id', validator.params(paramsValidator), function (req, res) {
     })
 })
 
-router.get('/todos', function (req, res) {
-    ToDo.getAllTodos(function (err, todos) {
+router.get('/todos', passport.authenticate('jwt', { session: false }), function (req, res) {
+    ToDo.getAllTodos(req.user._id, function (err, todos) {
         if (err) {
             console.log(err)
             return res.status(400).send('server could not understand the request')
@@ -37,8 +38,9 @@ router.get('/todos', function (req, res) {
     })
 })
 
-router.post('/todo', validator.body(bodyValidator), function (req, res) {
+router.post('/todo', passport.authenticate('jwt', { session: false }), validator.body(bodyValidator), function (req, res) {
     let newTodo = {}
+    newTodo.userId = req.user._id
     newTodo.toDo = req.body.toDo
     newTodo.listName = req.body.listName
     ToDo.addTodo(newTodo, function (err, todo) {
@@ -50,9 +52,10 @@ router.post('/todo', validator.body(bodyValidator), function (req, res) {
     })
 })
 
-router.put('/todo/:id', validator.params(paramsValidator), validator.body(bodyValidator), function (req, res) {
+router.put('/todo/:id', passport.authenticate('jwt', { session: false }), validator.params(paramsValidator), validator.body(bodyValidator), function (req, res) {
     let updatedTodo = {}
     updatedTodo._id = req.params.id
+    updatedTodo.userId = req.user._id
     updatedTodo.toDo = req.body.toDo
     updatedTodo.listName = req.body.listName
     ToDo.updateTodo(updatedTodo, function (err, todo) {
@@ -64,9 +67,9 @@ router.put('/todo/:id', validator.params(paramsValidator), validator.body(bodyVa
     })
 })
 
-router.delete('/todo/:id', validator.params(paramsValidator), function (req, res) {
+router.delete('/todo/:id', passport.authenticate('jwt', { session: false }), validator.params(paramsValidator), function (req, res) {
     ToDo.getAllTodos(function (err, todos) {
-        ToDo.deleteTodo(req.params.id, function (err, todo) {
+        ToDo.deleteTodo(req.params.id, req.user._id, function (err, todo) {
             if (err) {
                 console.log(err)
                 return res.status(400).send('server could not understand the request')

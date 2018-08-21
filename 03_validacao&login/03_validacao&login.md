@@ -47,3 +47,8 @@ const paramsValidator = Joi.object({
 - `npm install joi-objectid --save`
 
 # Login
+
+- Login utilizando JWT e passport
+
+## Requisitos
+- `npm i -s passport passport-jwt bcrypt jsonwebtoken`

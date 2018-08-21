@@ -15,5 +15,9 @@
   "bugs": {
     "url": "https://github.com/igornfaustino/minicurso-MERN/issues"
   },
-  "homepage": "https://github.com/igornfaustino/minicurso-MERN#readme"
+  "homepage": "https://github.com/igornfaustino/minicurso-MERN#readme",
+  "dependencies": {
+    "passport": "^0.4.0",
+    "passport-jwt": "^4.0.0"
+  }
 }

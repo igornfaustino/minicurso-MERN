@@ -3,6 +3,7 @@ const bodyParser = require("body-parser")
 const cors = require("cors")
 const mongoose = require("mongoose")
 const loadRoutes = require('./routes').loadRoutes
+const passport = require("passport")
 
 const server = express()
 const port = 8080
@@ -12,6 +13,8 @@ const db = mongoose.connection;
 
 server.use(bodyParser.json())
 server.use(cors())
+
+require('./config/passport').configPassport(passport)
 
 loadRoutes(server, '/api/')
 

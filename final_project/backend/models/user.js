@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 const UserSchema = mongoose.Schema({
-    email: String,
+    email: { type: String, unique: true, require: true },
     password: String
 })
 
@@ -13,21 +13,21 @@ module.exports.getUserById = function (id, callback) {
 }
 
 module.exports.getUserByEmail = function (email, callback) {
-    User.find({email: email}, callback)
+    User.findOne({ email: email }, callback)
 }
 
-module.exports.addUser = function (user, callback) {
+module.exports.addNewUser = function (user, callback) {
     User.create(user, callback)
 }
 
 module.exports.updateUser = function (updateUser, callback) {
     User.getUserById(updateUser._id, (err, user) => {
-        user.email = (updateUser.email && updateUser.email != user.email) ? updateUser.email: user.email
-        user.password = (updateUser.password && updateUser.password != user.password) ? updateUser.password: user.password
+        user.email = (updateUser.email && updateUser.email != user.email) ? updateUser.email : user.email
+        user.password = (updateUser.password && updateUser.password != user.password) ? updateUser.password : user.password
         user.save(callback)
     })
 }
 
 module.exports.deleteUser = function (id, callback) {
-    User.deleteOne({_id: id}, callback)
+    User.deleteOne({ _id: id }, callback)
 }
