@@ -27,31 +27,31 @@ import {Button, Form, Input} from 'reactstrap'
 ```
 - Criando o formulário para login
 ``` html
-    return ( 
-            <div>
-                <div>
-                    <Form>
-                        <h1>Login</h1>
+return ( 
+    <div>
+        <div>
+            <Form>
+                <h1>Login</h1>
 
-                        <Input 
-                            type="email"
-                            name="email"
-                            required
-                            placeholder="Digite seu e-mail" />
+                <Input 
+                    type="email"
+                    name="email"
+                    required
+                    placeholder="Digite seu e-mail" />
 
-                        <Input 
-                            type="password"
-                            name="password"
-                            required
-                            placeholder="Digite sua senha" />
+                <Input 
+                    type="password"
+                    name="password"
+                    required
+                    placeholder="Digite sua senha" />
 
-                        <Button type="submit" color="primary">Entrar!</Button>
-                        <Button color="secondary">Cadastre-se!</Button>
+                <Button type="submit" color="primary">Entrar!</Button>
+                <Button color="secondary">Cadastre-se!</Button>
 
-                    </Form>
-                </div>
-            </div>
-    );
+            </Form>
+        </div>
+    </div>
+);
 ```
 
 
@@ -70,33 +70,90 @@ import {Button, Form, Input} from 'reactstrap'
 ```
 
 - Link para o arquivo CSS usado nesta página: 
+    - https://github.com/igornfaustino/minicurso-MERN/blob/master/final_project/to-do-list/src/pages/login/login.css
+
+- Chamando as classes CSS no HTML já feito
 ``` html
-    return ( 
-            <div>
-                <div className="text-center body">
-                    <Form className="form-signin form">
-                        <h1 className="h3 mb-3 font-weight-normal">Login</h1>
+<div>
+    <div className="text-center body">
+        <Form className="form-signin form">
+            <h1 className="h3 mb-3 font-weight-normal">Login</h1>
 
-                        <Input 
-                            type="email"
-                            name="email"
-                            required
-                            placeholder="Digite seu e-mail" 
-                            style={{marginTop: "25%"}} />
+            <Input 
+                type="email"
+                name="email"
+                required
+                placeholder="Digite seu e-mail" 
+                style={{marginTop: "25%"}} />
 
-                        <Input type="password"
-                            name="password"
-                            required
-                            placeholder="Digite sua senha" />
+            <Input type="password"
+                name="password"
+                required
+                placeholder="Digite sua senha" />
 
-                        <Button 
-                        className="btn btn-info btn-color margin-button" 
-                        type="submit" color="primary">
-                        Entrar!
-                        </Button>
-                        <Button color="secondary">Cadastre-se!</Button>
+            <Button 
+            className="btn btn-info btn-color margin-button" 
+            type="submit" color="primary">
+            Entrar!
+            </Button>
+            <Button color="secondary">Cadastre-se!</Button>
 
-                    </Form>
-                </div>
-            </div>
-  
+        </Form>
+    </div>
+</div>
+  ```
+
+  # Acessando os valores digitados nos inputs
+
+- Armazenando os valores
+  - Constructor
+
+``` js
+export default class Login extends Component {
+
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            email: '',
+            password: '',
+        };
+    }
+}
+```
+- Adicionando campo `value` ao HTML
+
+```js
+value={this.state.NomeNoConstructor}
+```
+
+- Adicionando função para receber o valor digitado pelo usuário no HTML
+
+```js
+onChange={(event) => this.handleChange(event)}
+```
+- Criando a função handleChange
+
+```js
+handleChange(e) {
+    const name = e.target.name;
+    const value = e.target.value;
+    this.setState({ [name]: value })
+}
+```
+
+# Funções de validação 
+
+- Qual a finalidade?
+- Validações feitas neste projeto
+- Função de validação
+
+```js
+validateForm() {
+    return this.state.email.length > 0 && this.state.password.length > 3;
+}
+```
+- Mudanças necessárias no botão `Entrar!`
+```js
+disabled={!this.validateForm()}
+```
