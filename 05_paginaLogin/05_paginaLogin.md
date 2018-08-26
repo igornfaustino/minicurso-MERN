@@ -20,7 +20,7 @@ export default class Login extends Component {
 ```
 
 
-# Importando o reactstrap e criando o formulário para login
+## Importando o reactstrap e criando o formulário para login
 - Para importar os componentes do reactstraps necessários para essa página
 ``` js
 import {Button, Form, Input} from 'reactstrap'
@@ -55,7 +55,7 @@ return (
 ```
 
 
-# Adicionando CSS ao formulário
+## Adicionando CSS ao formulário
 
 - Como criar uma classe CSS
 ```css
@@ -103,7 +103,7 @@ return (
 </div>
   ```
 
-  # Acessando os valores digitados nos inputs
+  ## Acessando os valores digitados nos inputs
 
 - Armazenando os valores
   - Constructor
@@ -142,7 +142,7 @@ handleChange(e) {
 }
 ```
 
-# Funções de validação 
+## Funções de validação 
 
 - Qual a finalidade?
 - Validações feitas neste projeto
@@ -157,3 +157,56 @@ validateForm() {
 ```js
 disabled={!this.validateForm()}
 ```
+
+## Envio para o back
+
+- Axios
+
+```js
+import axios from 'axios';
+```
+
+- Mudança no `index.js`
+```js
+axios.defaults.baseURL = "http://localhost:8080/api"
+```
+
+- Função para logar
+
+```js
+submitRequest = event => {
+    event.preventDefault();
+    axios.post("/user/auth", {
+        email: this.state.email,
+        password: this.state.password
+    }).then(res => {
+        console.log(res)
+        localStorage.setItem("token", res.data.token);
+        axios.defaults.headers = {
+            "Authorization": localStorage.getItem("token")
+        }
+        this.props.history.push('/'); //Ainda não irá funcionar
+    }).catch(ex => {
+        console.log(ex)
+        alert("Usuario não cadastrado!")
+    })
+};
+```
+- Mudança no botão `Entrar!`
+
+```js
+onClick={this.submitRequest}
+```
+
+- Adicionando rotas ao `App.js`
+
+```js
+import { Switch, Route, BrowserRouter } from 'react-router-dom'
+
+<BrowserRouter>
+<Switch>
+    <Route path="/login" component={Login} />
+</Switch>
+</BrowserRouter>
+```
+
