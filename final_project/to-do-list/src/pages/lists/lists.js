@@ -4,7 +4,7 @@ import { isLogged } from "../../utils";
 import axios from 'axios';
 import ListItem from "../../components/listItem/ListItem";
 import NewList from '.././../components/newList/NewList';
-import { Col, Button, Form, FormGroup, Label, Input, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap'
+import { Button } from 'reactstrap'
 
 
 export default class Lists extends Component {
@@ -78,29 +78,57 @@ export default class Lists extends Component {
         }
     }
 
+    loggout = () => {
+        localStorage.clear()
+        this.props.history.push('/login');
+    }
+
+
     render() {
         let list = this.state.lists.map((item, index) => {
             return (
-                <ListItem selectItem={() => { console.log("teste");this.props.history.push('/list/' + item.id) }} listName={item.listName} delete={this.deleteList} desc={item.desc} key={index} edit={this.edit} id={item.id} />
+                <ListItem selectItem={() => { console.log("teste"); this.props.history.push('/list/' + item.id) }} listName={item.listName} delete={this.deleteList} desc={item.desc} key={index} edit={this.edit} id={item.id} />
             )
         })
 
         return (
 
-            <div style={{
-                marginTop: '3%',
-                marginLeft: '5%'
-            }}>
+            <div>
+                <div style={{
+                    backgroundColor: 'rgba(80, 165, 159, 0.527)',
+                }}>
+                    <Button style={{
+                        marginTop: '3px',
+                        marginLeft: '3px',
+                        marginBottom: '3px'
+                    }} onClick={this.loggout}>Sair</Button>
+                </div>
                 <h1 style={{
                     color: 'rgb(3, 136, 141)',
-                    marginBottom: '2%'
-                }}>To do Project</h1>
+                    marginTop: '3%',
+                    marginLeft: '5%'
+                }}>Projeto SEINFO18</h1>
                 <div style={{
-                    marginBottom: '3%'
+                    marginBottom: '3%',
                 }}>
-                    <Button color="success" onClick={this.toggle}>Nova Lista</Button>
+                    <Button color="success" onClick={this.toggle}
+                        style={{
+                            marginTop: '3%',
+                            marginLeft: '5%'
+                        }}>
+                        Nova Lista
+                    </Button>
+                    <hr style={{
+                        height: '12px',
+                        border: '0',
+                        boxShadow: 'inset 0 12px 12px -12px rgba(0, 0, 0, 0.5)',
+                        marginLeft: '0%',
+                    }} />
                 </div>
-                <div>
+                <div style={{
+                    marginTop: '3%',
+                    marginLeft: '5%'
+                }}>
                     {list}
                 </div>
                 <NewList modal={this.state.modal} toggle={this.toggle} updateList={this.getLists} />

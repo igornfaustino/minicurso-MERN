@@ -109,14 +109,16 @@ export default class Todos extends Component {
     }
 
     delete = (id) => {
-        let todos = this.state.toDo.filter((value) => {
-            return (value.id != id)
-        })
-        this.setState({
-            toDo: todos
-        }, () => {
-            this.update()
-        })
+        if (window.confirm('Deseja excluir a tarefa?')) {
+            let todos = this.state.toDo.filter((value) => {
+                return (value.id != id)
+            })
+            this.setState({
+                toDo: todos
+            }, () => {
+                this.update()
+            })
+        }
     }
 
     render() {
@@ -131,15 +133,37 @@ export default class Todos extends Component {
 
         return (
             <div>
-                <h1>{this.state.listName}</h1>
-                <p>{this.state.desc}</p>
-                <Button onClick={() => {
-                    this.props.history.push('/')
-                }}>Voltar</Button>
-                <Button color="success" onClick={this.toggle}>Adicionar</Button>
-                <Container>
-                    {items}
-                </Container>
+                <div style={{
+                    backgroundColor: 'rgba(80, 165, 159, 0.527)'
+                }}>
+                    <Button onClick={() => {
+                        this.props.history.push('/')
+                    }} style={{
+                        marginTop: '3px',
+                        marginLeft: '3px',
+                        marginBottom: '3px'
+                    }}>{" < "}</Button>
+                </div>
+                <div style={{
+                    marginTop: '3%',
+                    marginLeft: '5%',
+                }}>
+                    <h1 style={{
+                        color: 'rgb(3, 136, 141)',
+                    }}>{this.state.listName}</h1>
+                    <h3 style={{
+                        marginBottom: '3%',
+                        color: 'rgb(101, 135, 139)',
+                    }}>{this.state.desc}</h3>
+                    <Button color="success" style={{ marginLeft: '90%' }} onClick={this.toggle}>Nova Tarefa</Button>
+                </div>
+                <hr style={{
+                    height: '12px',
+                    border: '0',
+                    boxShadow: 'inset 0 12px 12px -12px rgba(0, 0, 0, 0.5)',
+                    marginLeft: '0%',
+                }} />
+                {items}
                 <NewTodo add={this.add} modal={this.state.modal} toggle={this.toggle} />
             </div>
         )

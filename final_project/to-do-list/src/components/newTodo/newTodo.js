@@ -27,7 +27,7 @@ export default class NewTodo extends Component {
     render() {
         return (
             <Modal isOpen={this.props.modal} toggle={this.props.toggle} className={this.props.className}>
-                <ModalHeader toggle={this.props.toggle}>Nova Lista</ModalHeader>
+                <ModalHeader toggle={this.props.toggle}>Nova tarefa:</ModalHeader>
                 <ModalBody>
                     <Form>
                         <FormGroup row>
@@ -37,7 +37,7 @@ export default class NewTodo extends Component {
                                     value={this.state.listName}
                                     onChange={(event) => this.handleChange(event)}
                                     required
-                                    placeholder="Digite o nome da lista" />
+                                    placeholder="Nome" />
                             </Col>
                         </FormGroup>
                         <FormGroup row>
@@ -46,7 +46,7 @@ export default class NewTodo extends Component {
                                     name="desc"
                                     value={this.state.desc}
                                     onChange={(event) => this.handleChange(event)}
-                                    placeholder="Digite a descrição da lista" />
+                                    placeholder="Descrição" />
                             </Col>
                         </FormGroup>
                     </Form>

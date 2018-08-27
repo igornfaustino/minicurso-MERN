@@ -20,12 +20,14 @@ export default class NewList extends Component {
 
     }
 
-    submitRequest  = () =>{
-        axios.post('todo', {listName: this.state.listName, 
-            desc: this.state.desc}).then((res) => {
-                alert('Lista criada com sucesso!')
-                this.props.updateList()
-                this.props.toggle()
+    submitRequest = () => {
+        axios.post('todo', {
+            listName: this.state.listName,
+            desc: this.state.desc
+        }).then((res) => {
+            alert('Lista criada com sucesso!')
+            this.props.updateList()
+            this.props.toggle()
         }).catch((ex) => {
             console.error(ex)
         })

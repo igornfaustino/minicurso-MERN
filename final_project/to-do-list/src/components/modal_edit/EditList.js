@@ -29,6 +29,7 @@ export default class EditList extends Component {
                     <Form>
                         <FormGroup row>
                             <Col sm={10}>
+                                <Label>Nome:</Label>
                                 <Input type="text"
                                     name="listName"
                                     value={this.state.listName}
@@ -39,6 +40,7 @@ export default class EditList extends Component {
                         </FormGroup>
                         <FormGroup row>
                             <Col sm={10}>
+                                <Label>Descrição:</Label>
                                 <Input type="text"
                                     name="desc"
                                     value={this.state.desc}
