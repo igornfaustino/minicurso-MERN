@@ -35,5 +35,10 @@ module.exports.updateTodo = (id, updatedTodo, callback) => {
         todo.listName = updatedTodo.listName ? updatedTodo.listName : todo.listName
         todo.desc = updatedTodo.desc ? updatedTodo.desc : todo.desc
         todo.todos = updatedTodo.todos ? updatedTodo.todos : todo.todos
+        todo.save(callback)
     })
+}
+
+module.exports.deleteTodo = (id, callback) => {
+    Todo.deleteOne({ _id: id }, callback)
 }
