@@ -1,4 +1,4 @@
-{
+  {
   "name": "back",
   "version": "1.0.0",
   "description": "",
@@ -16,6 +16,9 @@
     "cors": "^2.8.4",
     "express": "^4.16.3",
     "jsonwebtoken": "^8.3.0",
+    "express-joi-validation": "^0.2.1",
+    "joi": "^13.6.0",
+    "joi-objectid": "^2.0.0",
     "mongoose": "^5.2.10",
     "nodemon": "^1.18.3",
     "passport": "^0.4.0",

@@ -28,7 +28,7 @@ module.exports.addTodo = (todo, callback) => {
 }
 
 module.exports.updateTodo = (id, updatedTodo, callback) => {
-    Todo.getTodoById(id, (err, todo) => {
+    Todo.findOne({_id: id}, (err, todo) => {
         if (err) {
             callback(err, null)
         }
