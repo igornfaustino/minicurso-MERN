@@ -2,6 +2,7 @@ const express = require('express')
 const bodyParser = require("body-parser")
 const cors = require("cors")
 const mongoose = require("mongoose")
+const passport = require("passport")
 const port = 8080
 
 const server = express()
@@ -14,6 +15,8 @@ const db = mongoose.connection
 server.use(cors())
 // Parser da requisição
 server.use(bodyParser.json())
+
+require('./config/passport').configPassport(passport)
 
 // ------ Rotas ------
 const user = require("./routes/user")
