@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/igornfaustino/minicurso-MERN#readme",
   "dependencies": {
+    "create-react-app": "^1.5.2",
     "passport": "^0.4.0",
     "passport-jwt": "^4.0.0"
   }
