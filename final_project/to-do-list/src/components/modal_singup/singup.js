@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Col, Button, Form, FormGroup, Label, Input, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap'
+import axios from "axios";
 
 export default class Singup extends Component {
 
@@ -16,19 +17,11 @@ export default class Singup extends Component {
 
     validateForm() {
         var password_valid = true;
-        if (this.state.password.length != this.state.confirm_password.length) {
+        if (this.state.password != this.state.confirm_password) {
             password_valid = false;
         }
-        else {
-            for (var i = 0; i < this.state.password.length; i++) {
-                if (this.state.password[i] != this.state.confirm_password[i]) {
-                    password_valid = false;
-                }
-            }
-        }
         return this.state.email.length > 0 &&
-            this.state.password.length > 0 &&
-            this.state.confirm_password > 0 &&
+            this.state.password.length > 6 &&
             password_valid == true;
     }
 
@@ -40,13 +33,21 @@ export default class Singup extends Component {
 
     }
 
-    onClick(event){
-        this.props.toggle;
-        this.submitRequst();
-    }
-
-    submitRequst(){
-
+    submitRequst = async () => {
+        let res = await axios.post('/user/register', {
+            email: this.state.email,
+            password: this.state.password,
+        })
+        console.log(res)
+        if (res.status !== 201) {
+            return alert("Alguma coisa está errada");
+        }
+        this.setState({
+            email: '',
+            password: ''
+        });
+        alert("Usuário cadastrado")
+        this.props.toggle()
     }
 
     render() {
@@ -61,9 +62,9 @@ export default class Singup extends Component {
                                 <Input type="email"
                                     name="email"
                                     value={this.state.email}
-                                    onChange={(event) => this.handleChange(event)} 
+                                    onChange={(event) => this.handleChange(event)}
                                     required
-                                    placeholder="Digite seu e-mail"/>
+                                    placeholder="Digite seu e-mail" />
                             </Col>
                         </FormGroup>
                         <FormGroup row>
@@ -71,7 +72,7 @@ export default class Singup extends Component {
                                 <Input type="password"
                                     name="password"
                                     value={this.state.password}
-                                    onChange={(event) => this.handleChange(event)} 
+                                    onChange={(event) => this.handleChange(event)}
                                     required
                                     placeholder="Digite sua senha" />
                             </Col>
@@ -81,7 +82,7 @@ export default class Singup extends Component {
                                 <Input type="password"
                                     name="confirm_password"
                                     value={this.state.confirm_password}
-                                    onChange={(event) => this.handleChange(event)} 
+                                    onChange={(event) => this.handleChange(event)}
                                     required
                                     placeholder="Confirme sua senha" />
                             </Col>
@@ -89,7 +90,7 @@ export default class Singup extends Component {
                     </Form>
                 </ModalBody>
                 <ModalFooter>
-                    <Button color="primary" disabled={!this.validateForm()} onClick={this.onClick()}>Cadastrar</Button>{' '}
+                    <Button color="primary" disabled={!this.validateForm()} onClick={this.submitRequst}>Cadastrar</Button>
                     <Button color="secondary" onClick={this.props.toggle}>Fechar</Button>
                 </ModalFooter>
             </Modal>
